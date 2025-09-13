@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل الشقة - IskanHub</title>
+  <link rel="stylesheet" href="apartment-details.css">
+</head>
+<body>
+  <div class="details-container" id="apartmentDetails">
+    <p>جارٍ تحميل تفاصيل الشقة...</p>
+  </div>
+
+  <script>
+    // Get apartment ID from URL query ?id=1
+    const params = new URLSearchParams(window.location.search);
+    const apartmentId = params.get('id');
+
+    const container = document.getElementById('apartmentDetails');
+
+    async function loadApartment() {
+      if (!apartmentId) {
+        container.innerHTML = '<p>لم يتم تحديد الشقة.</p>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://x8ki-letl-twmt.n7.xano.io/api:pcPw3c4T/apartment/${apartmentId}`);
+        const apt = await response.json();
+
+        container.innerHTML = `
+          <img src="${apt.img || 'https://via.placeholder.com/800x300?text=Apartment'}" alt="${apt.title}">
+          <h2>${apt.title}</h2>
+          <p><strong>الوصف:</strong> ${apt.description}</p>
+          <p><strong>السعر:</strong> ${apt.price} دينار أردني</p>
+          <p><strong>المدينة:</strong> ${apt.city}</p>
+          <p><strong>العنوان:</strong> ${apt.address}</p>
+          <p><strong>عدد الغرف:</strong> ${apt.rooms}</p>
+          <p><strong>رقم الهاتف للتواصل:</strong> ${apt.contact_phone}</p>
+          <button class="btn btn-primary" onclick="bookAppointment()">احجز موعد</button>
+        `;
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = '<p>حدث خطأ أثناء تحميل تفاصيل الشقة.</p>';
+      }
+    }
+
+    function bookAppointment() {
+      alert(`تم استلام طلب حجز موعد لزيارة الشقة: ${apartmentId}`);
+    }
+
+    loadApartment();
+  </script>
+</body>
+</html>

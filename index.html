@@ -7,72 +7,64 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>شقق IskanHub</h1>
-    <p>تصفح الشقق واحجز موعد لزيارتها</p>
-  </header>
+  <div id="header-container"></div>
 
   <div class="container" id="apartments"></div>
 
   <script>
-    // Sample data – replace with your actual apartments
-    const apartments = [
-      {
-        id: 1,
-        title: "شقة فاخرة - عبدون",
-        price: "120,000 JOD",
-        location: "عمان - عبدون",
-        img: "https://via.placeholder.com/400x250?text=Apartment+1",
-        description: "شقة 3 غرف وصالة مع بلكونة وإطلالة رائعة."
-      },
-      {
-        id: 2,
-        title: "شقة عائلية - تلاع العلي",
-        price: "90,000 JOD",
-        location: "عمان - تلاع العلي",
-        img: "https://via.placeholder.com/400x250?text=Apartment+2",
-        description: "شقة 2 غرف نوم وصالة قريبة من الخدمات."
-      },
-      {
-        id: 3,
-        title: "شقة للإيجار - الصويفية",
-        price: "800 JOD / شهر",
-        location: "عمان - الصويفية",
-        img: "https://via.placeholder.com/400x250?text=Apartment+3",
-        description: "شقة حديثة مع مطبخ مجهز بالكامل."
-      }
-    ];
-
     const container = document.getElementById('apartments');
 
-    apartments.forEach(apartment => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <img src="${apartment.img}" alt="${apartment.title}">
-        <div class="card-body">
-          <h3>${apartment.title}</h3>
-          <p><strong>السعر:</strong> ${apartment.price}</p>
-          <p><strong>الموقع:</strong> ${apartment.location}</p>
-        </div>
-       <div class="card-footer">
-  <button class="btn btn-secondary" onclick="showDetails(${apartment.id})">عرض التفاصيل</button>
-  <button class="btn btn-primary" onclick="reserve(${apartment.id})">احجز موعد</button>
-</div>
-      `;
-      container.appendChild(card);
-    });
+    // Fetch apartments from API
+    async function loadApartments() {
+      try {
+        const response = await fetch('https://x8ki-letl-twmt.n7.xano.io/api:pcPw3c4T/apartment');
+        const apartments = await response.json();
+
+        apartments.forEach(apartment => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${apartment.img || 'https://via.placeholder.com/400x250?text=Apartment'}" alt="${apartment.title}">
+            <div class="card-body">
+              <h3>${apartment.title}</h3>
+              <p><strong>السعر:</strong> ${apartment.price} JOD</p>
+              <p><strong>الموقع:</strong> ${apartment.city || 'غير محدد'}</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-secondary" onclick="showDetails(${apartment.id})">عرض التفاصيل</button>
+              <button class="btn btn-primary" onclick="reserve(${apartment.id})">احجز موعد</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('حدث خطأ عند جلب الشقق:', error);
+        container.innerHTML = '<p>فشل تحميل الشقق. حاول لاحقاً.</p>';
+      }
+    }
+    async function loadHeader() {
+  try {
+    const response = await fetch("header.html?nocache=" + Date.now());
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const headerHTML = await response.text();
+    document.getElementById("header-container").innerHTML = headerHTML;
+  } catch (err) {
+    console.error("Error loading header:", err);
+    document.getElementById("header-container").innerHTML = "<p>تعذر تحميل القائمة</p>";
+  }
+}
+    loadHeader();
+
+    loadApartments();
 
     function reserve(id) {
-      const apt = apartments.find(a => a.id === id);
-      alert(`تم استلام طلب حجز موعد لزيارة: ${apt.title}`);
-      // Later: replace with form/WhatsApp integration
+      alert(`تم استلام طلب حجز موعد لزيارة الشقة رقم: ${id}`);
+      // Later: integrate form or WhatsApp/phone
     }
 
     function showDetails(id) {
-      const apt = apartments.find(a => a.id === id);
-      alert(`تفاصيل الوحدة:\n\n${apt.title}\nالموقع: ${apt.location}\nالسعر: ${apt.price}\nالوصف: ${apt.description}`);
-      // Later: replace with a modal popup or dedicated page
+      // Redirect to the details page with apartment ID in query
+      window.location.href = `apartment-details.html?id=${id}`;
     }
   </script>
 </body>

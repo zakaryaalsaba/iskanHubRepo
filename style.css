@@ -2,6 +2,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #f8f9fa;
+    direction: rtl; /* Arabic layout */
+    text-align: right;
   }
   
   header {
@@ -15,7 +17,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
     gap: 1rem;
-    justify-content: center; /* Center cards horizontally */
+    justify-content: center; /* center cards */
     padding: 1rem;
   }
   
@@ -37,6 +39,7 @@ body {
   .card-body {
     padding: 1rem;
     flex: 1;
+    text-align: right; /* ensure text is RTL */
   }
   
   .card-body h3 {
@@ -57,6 +60,7 @@ body {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
+    flex-direction: row-reverse; /* buttons: primary first, secondary second in RTL */
   }
   
   .btn {
@@ -68,7 +72,7 @@ body {
     font-weight: bold;
   }
   
-  /* Primary (blue) */
+  /* Primary (احجز موعد - Blue) */
   .btn-primary {
     background: #0066cc;
   }
@@ -76,10 +80,37 @@ body {
     background: #004c99;
   }
   
-  /* Secondary (green) */
+  /* Secondary (عرض التفاصيل - Green) */
   .btn-secondary {
     background: #28a745;
   }
   .btn-secondary:hover {
     background: #1e7e34;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  header nav {
+    margin-top: 10px;
+  }
+  
+  header nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  header nav a:hover {
+    text-decoration: underline;
   }

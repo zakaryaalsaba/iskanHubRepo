@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم - إضافة شقة</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body dir="rtl">
+  <h1>لوحة التحكم - إضافة شقة جديدة</h1>
+  
+  <form id="apartmentForm">
+    <label>العنوان</label>
+    <input type="text" id="title" placeholder="أدخل عنوان الشقة" required>
+
+    <label>الوصف</label>
+    <textarea id="description" rows="4" placeholder="أدخل وصف الشقة" required></textarea>
+
+    <label>السعر (دينار أردني)</label>
+    <input type="number" id="price" step="0.01" min="0" placeholder="0.00" required>
+
+    <label>المدينة</label>
+    <input type="text" id="city" placeholder="أدخل اسم المدينة" required>
+
+    <label>العنوان التفصيلي</label>
+    <input type="text" id="address" placeholder="أدخل العنوان التفصيلي" required>
+
+    <label>عدد الغرف</label>
+    <input type="number" id="rooms" min="1" placeholder="0" required>
+
+    <label>رقم الهاتف للتواصل</label>
+    <input type="text" id="contact_phone" placeholder="أدخل رقم الهاتف" required>
+
+    <label>النشر</label>
+    <select id="is_published">
+      <option value="true" selected>نعم</option>
+      <option value="false">لا</option>
+    </select>
+
+    <label>معرّف المستخدم</label>
+    <input type="number" id="user_id" value="1" required>
+
+    <button type="submit">إضافة الشقة</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('apartmentForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        price: parseFloat(document.getElementById('price').value),
+        city: document.getElementById('city').value,
+        address: document.getElementById('address').value,
+        rooms: parseInt(document.getElementById('rooms').value),
+        contact_phone: document.getElementById('contact_phone').value,
+        is_published: document.getElementById('is_published').value === 'true',
+        user_id: parseInt(document.getElementById('user_id').value)
+      };
+
+      try {
+        const response = await fetch('https://x8ki-letl-twmt.n7.xano.io/api:pcPw3c4T/apartment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        alert('تمت إضافة الشقة بنجاح!\nمعرّف الشقة: ' + (data.id || 'تحقق من الاستجابة'));
+        //form.reset();
+      } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء إضافة الشقة. تحقق من وحدة التحكم للمزيد من التفاصيل.');
+      }
+    });
+  </script>
+</body>
+</html>
