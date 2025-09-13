@@ -1,7 +1,79 @@
-<html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شقق للإيجار والبيع - IskanHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <div>
-    <p>Test my Iskan</p>
-  </di>
+  <header>
+    <h1>شقق IskanHub</h1>
+    <p>تصفح الشقق واحجز موعد لزيارتها</p>
+  </header>
+
+  <div class="container" id="apartments"></div>
+
+  <script>
+    // Sample data – replace with your actual apartments
+    const apartments = [
+      {
+        id: 1,
+        title: "شقة فاخرة - عبدون",
+        price: "120,000 JOD",
+        location: "عمان - عبدون",
+        img: "https://via.placeholder.com/400x250?text=Apartment+1",
+        description: "شقة 3 غرف وصالة مع بلكونة وإطلالة رائعة."
+      },
+      {
+        id: 2,
+        title: "شقة عائلية - تلاع العلي",
+        price: "90,000 JOD",
+        location: "عمان - تلاع العلي",
+        img: "https://via.placeholder.com/400x250?text=Apartment+2",
+        description: "شقة 2 غرف نوم وصالة قريبة من الخدمات."
+      },
+      {
+        id: 3,
+        title: "شقة للإيجار - الصويفية",
+        price: "800 JOD / شهر",
+        location: "عمان - الصويفية",
+        img: "https://via.placeholder.com/400x250?text=Apartment+3",
+        description: "شقة حديثة مع مطبخ مجهز بالكامل."
+      }
+    ];
+
+    const container = document.getElementById('apartments');
+
+    apartments.forEach(apartment => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${apartment.img}" alt="${apartment.title}">
+        <div class="card-body">
+          <h3>${apartment.title}</h3>
+          <p><strong>السعر:</strong> ${apartment.price}</p>
+          <p><strong>الموقع:</strong> ${apartment.location}</p>
+        </div>
+       <div class="card-footer">
+  <button class="btn btn-secondary" onclick="showDetails(${apartment.id})">عرض التفاصيل</button>
+  <button class="btn btn-primary" onclick="reserve(${apartment.id})">احجز موعد</button>
+</div>
+      `;
+      container.appendChild(card);
+    });
+
+    function reserve(id) {
+      const apt = apartments.find(a => a.id === id);
+      alert(`تم استلام طلب حجز موعد لزيارة: ${apt.title}`);
+      // Later: replace with form/WhatsApp integration
+    }
+
+    function showDetails(id) {
+      const apt = apartments.find(a => a.id === id);
+      alert(`تفاصيل الوحدة:\n\n${apt.title}\nالموقع: ${apt.location}\nالسعر: ${apt.price}\nالوصف: ${apt.description}`);
+      // Later: replace with a modal popup or dedicated page
+    }
+  </script>
 </body>
-<html>
+</html>
