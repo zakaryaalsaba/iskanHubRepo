@@ -94,40 +94,34 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 2rem;
+    direction: rtl; /* ensure RTL for layout */
   }
   
   .header-left {
     display: flex;
     align-items: center;
+    order: 2; /* push logo to the right in RTL */
   }
   
   .logo {
-    width: 100px;   /* control size */
-    height: 80px;  /* keep square */
-    margin-right: 10px;
+    width: 60px;   /* adjust to fit header */
+    height: auto;  /* maintain aspect ratio */
+    margin-left: 10px; /* space between logo and nav */
   }
   
-  nav a {
-    color: white;
-    margin-left: 15px;
-    text-decoration: none;
-  }
-  
-  nav a:hover {
-    text-decoration: underline;
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    order: 1; /* nav appears on left side in RTL */
   }
   
   header nav a {
-    color: white; /* Make sure links are visible */
+    color: white;
     text-decoration: none;
-    margin: 0 15px;
     font-weight: bold;
   }
   
   header nav a:hover {
-    color: #ffcc00; /* Add hover color for effect */
+    color: #ffcc00;
   }
