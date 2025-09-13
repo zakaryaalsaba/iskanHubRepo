@@ -104,8 +104,8 @@ body {
   }
   
   .logo {
-    width: 60px;   /* adjust to fit header */
-    height: auto;  /* maintain aspect ratio */
+    width: 10px;   /* adjust to fit header */
+    height: 100px;  /* maintain aspect ratio */
     margin-left: 10px; /* space between logo and nav */
   }
   
