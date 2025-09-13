@@ -117,3 +117,15 @@ body {
   header nav a:hover {
     color: #ffcc00; /* Add hover color for effect */
   }
+
+  .header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .header-logo img {
+    width: 50px;
+    height: auto;
+  }
